@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:souqporsaid/screens/cart/cart.dart';
+import 'package:souqporsaid/screens/favorite/favorite_screen.dart';
 import 'package:souqporsaid/screens/feeds/feeds.dart';
 import 'package:souqporsaid/screens/home_page/home_screen.dart';
+import 'package:souqporsaid/screens/main_categries/mainCategories.dart';
 import 'package:souqporsaid/screens/search/search_screen.dart';
 import 'package:souqporsaid/screens/user_info/user_info.dart';
 
@@ -19,8 +21,8 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
     super.initState();
     _pages=[
       {'page':HomePage()},
-      {'page':Feeds()},
-      {'page':Search()},
+      {'page':FavoriteScreen()},
+      {'page':MainCategories()},
       {'page':Cart()},
       {'page':UserInfo()}
     ];
@@ -37,13 +39,16 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
     final width = MediaQuery.of(context).size.width;
     final height =MediaQuery.of(context).size.height;
     return Scaffold(
+      backgroundColor: Colors.white,
       body: _pages[selectedPageIndex]["page"],
       bottomNavigationBar: BottomAppBar(
         shape: CircularNotchedRectangle(),
         notchMargin: 0.1,
+        color: Colors.white,
         clipBehavior: Clip.antiAlias,
         child: Container(
-          height: height*0.1,
+          height: height*0.08,
+          color: Colors.white,
           child: Container(
             decoration:BoxDecoration(
               color: Colors.white,
@@ -61,11 +66,11 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
               unselectedItemColor: Colors.black,
               currentIndex: selectedPageIndex,
               items: [
-                BottomNavigationBarItem(icon:Icon(Icons.home),label: "Home"),
-                BottomNavigationBarItem(icon:Icon(Icons.rss_feed),label: "Feeds"),
-                BottomNavigationBarItem(icon:Icon(null),activeIcon: null,label: "Search"),
-                BottomNavigationBarItem(icon:Icon(Icons.shopping_cart),label: "Cart"),
-                BottomNavigationBarItem(icon: Icon(Icons.person_outline),label: "User"),
+                BottomNavigationBarItem(icon:Icon(Icons.home),label: ""),
+                BottomNavigationBarItem(icon:Icon(Icons.favorite),label: ""),
+                BottomNavigationBarItem(icon:Icon(null),activeIcon: null,label: ""),
+                BottomNavigationBarItem(icon:Icon(Icons.shopping_cart),label: ""),
+                BottomNavigationBarItem(icon: Icon(Icons.person_outline),label: ""),
               ],
             ),
           ),
@@ -80,11 +85,12 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
           splashColor: Colors.grey,
           tooltip: "Search",
           elevation: 4,
-          child: Icon(Icons.search),
+          child: Icon(Icons.category),
           onPressed: (){
             setState(() {
               selectedPageIndex =2;
             });
+//          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>MainCategories()));
           },
         ),
       )

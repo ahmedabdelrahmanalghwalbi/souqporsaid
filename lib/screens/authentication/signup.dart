@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:souqporsaid/alertToast.dart';
 import 'package:souqporsaid/screens/authentication/login.dart';
+import 'information.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -7,6 +9,10 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  String fullName;
+  String email;
+  String password;
+  String reEnterPassword;
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -39,12 +45,12 @@ class _SignUpState extends State<SignUp> {
                     ),)),
                     //create a new account statement
                     Expanded(flex:1,child: Container(child: Center(
-                      child:Text("Create a new account",style: TextStyle(
+                      child:Text("عمل حساب جديد",style: TextStyle(
                           color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 25,
                         letterSpacing: 1
-                      ),),
+                      ),textAlign: TextAlign.center,),
                     ),))
                   ],
                 ),
@@ -60,8 +66,13 @@ class _SignUpState extends State<SignUp> {
                   Padding(
                     padding:EdgeInsets.only(bottom:8.0),
                     child: TextFormField(
+                      onChanged: (val){
+                        setState(() {
+                          fullName=val;
+                        });
+                      },
                     decoration: InputDecoration(
-                      hintText: "Full Name",
+                      hintText: "الأسم بالكامل",
                       hintStyle: TextStyle(
                         color: Colors.grey,
                         letterSpacing: 2
@@ -79,8 +90,13 @@ class _SignUpState extends State<SignUp> {
                   Padding(
                     padding:EdgeInsets.only(bottom:8.0),
                     child: TextFormField(
+                      onChanged: (val){
+                        setState(() {
+                          email=val;
+                        });
+                      },
                       decoration: InputDecoration(
-                        hintText: "Your Email",
+                        hintText: "البريد الألكتروني",
                         hintStyle: TextStyle(
                             color: Colors.grey,
                             letterSpacing: 2
@@ -98,9 +114,14 @@ class _SignUpState extends State<SignUp> {
                   Padding(
                     padding:EdgeInsets.only(bottom:8.0),
                     child: TextFormField(
+                      onChanged: (val){
+                        setState(() {
+                          password=val;
+                        });
+                      },
                       obscureText: true,
                       decoration: InputDecoration(
-                        hintText: "Password",
+                        hintText: "كلمة المرور",
                         hintStyle: TextStyle(
                             color: Colors.grey,
                             letterSpacing: 2
@@ -118,9 +139,14 @@ class _SignUpState extends State<SignUp> {
                   Padding(
                     padding:EdgeInsets.only(bottom:8.0),
                     child: TextFormField(
+                      onChanged: (val){
+                        setState(() {
+                          reEnterPassword=val;
+                        });
+                      },
                       obscureText: true,
                       decoration: InputDecoration(
-                        hintText: "Re-Enter Password",
+                        hintText: "أعادة أدخال كلمة المرور",
                         hintStyle: TextStyle(
                             color: Colors.grey,
                             letterSpacing: 2
@@ -139,36 +165,57 @@ class _SignUpState extends State<SignUp> {
                     child:GestureDetector(
                       onTap: (){
                         //here sign up functionality
+                        if(email!=null && password!=null && fullName!=null && reEnterPassword!=null){
+                          if(password == reEnterPassword){
+                            if(password.length>8){
+                              if(email.contains("@")){
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Information(
+                                  email: email,
+                                  password: password,
+                                  fullName: fullName,
+                                )));
+                              }else{
+                                alertToast("البريد الألكتروني غير صالح !",Color(0xffFA953D) , Colors.black);
+                              }
+                            }else{
+                              alertToast("كلمة المرور ضعيفة !",Color(0xffFA953D) , Colors.black);
+                            }
+                          }else{
+                            alertToast("عدم تطابق كلمتي المرور !",Color(0xffFA953D) , Colors.black);
+                          }
+                        }else{
+                          alertToast("رجاء قم بأدخال كل البيانات !",Color(0xffFA953D) , Colors.black);
+                        }
                       },
                       child: Container(
-                        width: width,
-                        height: height*0.07,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Color(0xffFA953D)
+                          width: width,
+                          height: height*0.07,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color(0xffFA953D)
+                          ),
+                          child: Center(
+                            child: Text("التالي",style: TextStyle(
+                              color: Colors.white,
+                              letterSpacing: 2,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20
+                            ),),
+                          ),
                         ),
-                        child: Center(
-                          child: Text("Sign Up",style: TextStyle(
-                            color: Colors.white,
-                            letterSpacing: 2,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20
-                          ),),
-                        ),
-                      ),
                     )
                   ),
                   //have an account ? statement
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Have an Account ? ",style: TextStyle(color: Colors.white,letterSpacing: 2),),
                       GestureDetector(onTap: (){
                         // Navigator to sign in screen
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>Login()));
                       },
-                        child:Text("Sign In",style: TextStyle(color: Color(0xffFA953D)),),
+                        child:Text("تسجيل الدخول",style: TextStyle(color: Color(0xffFA953D)),),
                       ),
+                      Text(" هل تمتلك حسااب ؟ ",style: TextStyle(color: Colors.white,letterSpacing: 2),),
                     ],
                   ),
                   ],),)),

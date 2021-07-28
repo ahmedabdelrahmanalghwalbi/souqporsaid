@@ -1,5 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:souqporsaid/screens/authentication/signup.dart';
+import 'package:souqporsaid/screens/components/custom_buttom_bar.dart';
+
+import '../../alertToast.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -7,6 +11,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  String email;
+  String password;
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -42,14 +48,14 @@ class _LoginState extends State<Login> {
                       child:Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Welcome to ",style: TextStyle(
-                              color: Colors.white,
+                          Text("سوق بورسعيد",style: TextStyle(
+                              color: Color(0xffFA953D),
                               fontWeight: FontWeight.bold,
-                              fontSize: 25,
+                              fontSize: 27,
                               letterSpacing: 1
                           ),),
-                          Text("SouQ Portsaid ",style: TextStyle(
-                              color: Color(0xffFA953D),
+                          Text("أهلا بك في",style: TextStyle(
+                              color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 25,
                               letterSpacing: 1
@@ -71,8 +77,13 @@ class _LoginState extends State<Login> {
                     Padding(
                       padding:EdgeInsets.only(bottom:8.0),
                       child: TextFormField(
+                        onChanged: (val){
+                          setState(() {
+                            email=val;
+                          });
+                        },
                         decoration: InputDecoration(
-                          hintText: "Your Email",
+                          hintText: "البريد الألكتروني",
                           hintStyle: TextStyle(
                               color: Colors.grey,
                               letterSpacing: 2
@@ -90,9 +101,14 @@ class _LoginState extends State<Login> {
                     Padding(
                       padding:EdgeInsets.only(bottom:8.0),
                       child: TextFormField(
+                        onChanged: (val){
+                          setState(() {
+                            password=val;
+                          });
+                        },
                         obscureText: true,
                         decoration: InputDecoration(
-                          hintText: "Password",
+                          hintText: "كلمة المرور",
                           hintStyle: TextStyle(
                               color: Colors.grey,
                               letterSpacing: 2
@@ -109,8 +125,28 @@ class _LoginState extends State<Login> {
                     //Sign Up Button
                     Padding(padding: EdgeInsets.only(bottom: 30,top: 20),
                         child:GestureDetector(
-                          onTap: (){
+                          onTap: ()async{
+                            if(email!=null && password!=null){
+                              if(email.contains("@")){
+                                if(password.length>8){
+                                  await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password).then((value){
+                                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>CustomBottomBar()));
+                                  }).catchError((ex){
+                                    print(ex);
+                                    alertToast("خطأ أثناء تسجيل الدخول !",Color(0xffFA953D) , Colors.black);
+                                  });
+                                }else{
+                                  alertToast("كلمة المرور ضعيفة !",Color(0xffFA953D) , Colors.black);
+                                }
+                              }else{
+                                alertToast("البريد الألكتروني غير صالح !",Color(0xffFA953D) , Colors.black);
+
+                              }
+                            }else{
+                              alertToast("رجاء قم بأدخال كل البيانات !",Color(0xffFA953D) , Colors.black);
+                            }
                             //here sign up functionality
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CustomBottomBar()));
                           },
                           child: Container(
                             width: width,
@@ -120,7 +156,7 @@ class _LoginState extends State<Login> {
                                 color: Color(0xffFA953D)
                             ),
                             child: Center(
-                              child: Text("Sign In",style: TextStyle(
+                              child: Text("تسجيل الدخول",style: TextStyle(
                                   color: Colors.white,
                                   letterSpacing: 2,
                                   fontWeight: FontWeight.bold,
@@ -134,13 +170,13 @@ class _LoginState extends State<Login> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Don't Have an Account ? ",style: TextStyle(color: Colors.white,letterSpacing: 2),),
                         GestureDetector(onTap: (){
                           // Navigator to sign in screen
                           Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUp()));
                         },
-                          child:Text("Register",style: TextStyle(color: Color(0xffFA953D)),),
+                          child:Text("أشتراك",style: TextStyle(color: Color(0xffFA953D)),),
                         ),
+                        Text("لا تمتلك حساب ؟ ",style: TextStyle(color: Colors.white,letterSpacing: 2),),
                       ],
                     ),
                   ],),)),

@@ -9,16 +9,17 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder(
       // Replace the 3 second delay with your initialization code:
-      future: Future.delayed(Duration(seconds: 1)),
+      future: Future.delayed(Duration(seconds: 2)),
       builder: (context, AsyncSnapshot snapshot) {
         // Show splash screen while waiting for app resources to load:
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return MaterialApp(home: Splash(),debugShowCheckedModeBanner: false,);
+          return MaterialApp(home: Splash(),
+            debugShowCheckedModeBanner: false,);
         } else {
           // Loading is done, return the app:
           //here i will set the home
           return MaterialApp(
-            home: SignUp(),
+            home: CustomBottomBar(),
             debugShowCheckedModeBanner: false,
           );
         }
