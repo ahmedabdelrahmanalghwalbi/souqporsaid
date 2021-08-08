@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:souqporsaid/screens/product/product_page.dart';
+import 'package:souqporsaid/screens/product/view_product_page.dart';
 
 class AllSectionProduct extends StatefulWidget {
   final String category;
@@ -98,7 +99,7 @@ class _AllSectionProductState extends State<AllSectionProduct> {
                               if(data['name'].toString().contains(searchProduct) && data['category']==widget.category && data["subCategory"]== widget.subCategory){
                                 return GestureDetector(
                                   onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductPage(product: data,)));
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewProductPage(product: data,)));
                                   },
                                   child: Card(
                                     child: Container(

@@ -1,12 +1,16 @@
+import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:souqporsaid/screens/main_categries/allSectionProduct.dart';
+import 'package:souqporsaid/screens/search/search_screen.dart';
 
+import '../responsize.dart';
 import 'allCategoryProducts.dart';
 
 class SubCategory extends StatefulWidget {
   List<dynamic>subCategories;
   String category;
-  SubCategory({this.subCategories,this.category});
+  String imageUrl;
+  SubCategory({this.subCategories,this.category,this.imageUrl});
   @override
   _SubCategoryState createState() => _SubCategoryState();
 }
@@ -21,9 +25,9 @@ class _SubCategoryState extends State<SubCategory> {
         title: Image.asset("assets/appBarLogo.png"),
         centerTitle: true,
         actions: [
-          GestureDetector(child: Icon(Icons.search,color: Colors.white,),onTap: (){},),
-          SizedBox(width: 10,),
-          GestureDetector(child: Icon(Icons.shopping_cart,color: Colors.white,),onTap: (){},),
+          GestureDetector(child: Icon(Icons.search,color: Colors.white,),onTap: (){
+            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>SearchPage()));
+          },),
         ],
       ),
       body: SingleChildScrollView(
@@ -32,9 +36,21 @@ class _SubCategoryState extends State<SubCategory> {
           height: MediaQuery.of(context).size.height,
           child: Column(
             children: [
-              Expanded(flex:2,child: Container(
+              Expanded(
+                flex: 3,
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(widget.imageUrl),
+                      fit: BoxFit.fill
+                    )
+                  ),
+                ),
+              ),
+              Expanded(flex:1,child: Container(
                 decoration: BoxDecoration(
-                  border: Border(bottom: BorderSide(width: 4,color: Colors.grey))
+//                  border: Border(bottom: BorderSide(width: 4,color: Colors.grey))
                 ),
                 child: Center(
                 child: GestureDetector(
@@ -42,22 +58,22 @@ class _SubCategoryState extends State<SubCategory> {
                     Navigator.push(context,MaterialPageRoute(builder: (context)=>AllCategoryProducts(category:widget.category)));
                   },
                   child: Container(
-                    width: MediaQuery.of(context).size.width/2,
+                    width: MediaQuery.of(context).size.width,
 //                  height: MediaQuery.of(context).size.height*0.1,
-                      padding: EdgeInsets.only(top: 15,bottom: 15,left: 20,right: 20),
+                      padding: EdgeInsets.only(top: 2,bottom: 2,left: 20,right: 20),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.white),
                       borderRadius: BorderRadius.circular(5),
-                      color: Colors.white
                     ),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text("عرض كل المنتجات",style: TextStyle(
-                          color: Colors.orange,
-                          fontSize: 15,
+                          color: Colors.black,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold
                         ),),
+                        SizedBox(width: 10,),
                         Icon(Icons.arrow_forward_ios,color: Colors.grey,)
                       ],
                     ),
@@ -65,14 +81,14 @@ class _SubCategoryState extends State<SubCategory> {
                 ),
               ),),),
               Expanded(
-                flex: 8,
+                flex: 5,
                 child: Container(
                   padding: EdgeInsets.only(top: 10),
                   child: GridView.builder(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
+                      crossAxisCount:AppResponsive.isDesktop(context) || AppResponsive.isTablet(context)?5:3,
                       childAspectRatio:0.9,
                       crossAxisSpacing: 10,
-                      mainAxisSpacing: 5
+                      mainAxisSpacing: AppResponsive.isDesktop(context) || AppResponsive.isTablet(context)?10:5
                   ),itemBuilder: (context,index){
                     return GestureDetector(
                       onTap: (){
@@ -80,14 +96,16 @@ class _SubCategoryState extends State<SubCategory> {
                       },
                       child: Container(
                         padding: const EdgeInsets.all(10),
+                        margin: EdgeInsets.all(5),
                         decoration: BoxDecoration(
+                          color: Colors.white,
                             borderRadius: BorderRadius.circular(15),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Expanded(child:CircleAvatar(radius: 70,backgroundColor: Colors.white,child: Image.network(widget.subCategories[index]['image'],))),
+                            Expanded(child:CircleAvatar(radius: 70,backgroundColor: Colors.grey,child: Image.network(widget.subCategories[index]['image'],fit: BoxFit.contain,))),
                             Expanded(child: Center(child: Text(widget.subCategories[index]['title'],
                               textAlign: TextAlign.center,
                               style: TextStyle(

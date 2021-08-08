@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:souqporsaid/screens/authentication/signup.dart';
 import 'package:souqporsaid/screens/home_page/productTestModel.dart';
 import 'package:souqporsaid/screens/product/product_page.dart';
+import 'package:souqporsaid/screens/product/view_product_page.dart';
 
 import '../../../alertToast.dart';
 
@@ -30,7 +31,7 @@ class _ProductCardState extends State<ProductCard> {
           width:170,
           child: GestureDetector(
             onTap: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ProductPage(product: widget.product)));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ViewProductPage(product: widget.product)));
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

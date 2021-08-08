@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:souqporsaid/screens/home_page/topHeaderSlider/productItem.dart';
 import 'package:souqporsaid/screens/product/product_page.dart';
+import 'package:souqporsaid/screens/product/view_product_page.dart';
+
+import '../responsize.dart';
 
 class AllCategoryProducts extends StatefulWidget {
   final String category;
@@ -98,77 +101,80 @@ class _AllCategoryProductsState extends State<AllCategoryProducts> {
                               if(data['name'].toString().contains(searchProduct) && data['category']==widget.category){
                                 return GestureDetector(
                                   onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductPage(product: data,)));
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewProductPage(product: data,)));
                                   },
-                                  child: Card(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                      width: MediaQuery.of(context).size.width*0.9,
-                                      height: MediaQuery.of(context).size.height*0.17,
-                                      child: Row(
-                                        children: [
-                                          Expanded(child: Container(
-                                            child: Image.network(data['images'][0],fit: BoxFit.contain,),
-                                            decoration: BoxDecoration(
-                                                color: Colors.orange[100].withOpacity(.2),
-                                                borderRadius: BorderRadius.circular(15)
-                                            ),
-                                            margin: EdgeInsets.all(10),
-                                          ),),
-                                          Expanded(child: Container(child: Column(
-                                            children: [
-                                              Container(
-                                                width: 40,
-                                                height: 25,
-                                                margin: EdgeInsets.only(left: 110),
-                                                decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(10),
-                                                    color: Colors.orange
-                                                ),
-                                                child: Center(
-                                                  child: Text("${data["discount"].toString()}%",style: TextStyle(
-                                                      color: Colors.white
-                                                  ),),
-                                                ),
+                                  child: Padding(
+                                    padding: EdgeInsets.only(bottom: 10.0),
+                                    child: Card(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(15),
+                                        ),
+                                        width:AppResponsive.isDesktop(context) || AppResponsive.isTablet(context)? MediaQuery.of(context).size.width*0.6:MediaQuery.of(context).size.width*0.9,
+                                        height: MediaQuery.of(context).size.height*0.17,
+                                        child: Row(
+                                          children: [
+                                            Expanded(child: Container(
+                                              child: Image.network(data['images'][0],fit: BoxFit.contain,),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.orange[100].withOpacity(.2),
+                                                  borderRadius: BorderRadius.circular(15)
                                               ),
-                                              Text(data["name"],textAlign: TextAlign.center,style: TextStyle(
-                                                fontSize: 20
-                                              ),),
-                                              Text('${data["price"].toString()} EGP',textAlign: TextAlign.center,style: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: 16
-                                              ),),
-                                              Padding(
-                                                padding:
-                                                const EdgeInsets.symmetric(
-                                                    vertical: 8.0),
-                                                child: RatingBar(
-                                                  ignoreGestures: true,
-                                                  itemSize: 20,
-                                                  allowHalfRating: true,
-                                                  initialRating:3,
-                                                  itemPadding:
-                                                  EdgeInsets.symmetric(
-                                                      horizontal: 4.0),
-                                                  ratingWidget: RatingWidget(
-                                                    empty: Icon(
-                                                        Icons.star_border,
-                                                        color:Colors.grey,
-                                                        size: 20),
-                                                    full: Icon(
-                                                      Icons.star,
-                                                      color: Colors.yellow,
-                                                      size: 20,
-                                                    ),
-                                                    half: null,
+                                              margin: EdgeInsets.all(10),
+                                            ),),
+                                            Expanded(child: Container(child: Column(
+                                              children: [
+                                                Container(
+                                                  width: 40,
+                                                  height: 25,
+                                                  margin: EdgeInsets.only(left: 110),
+                                                  decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(10),
+                                                      color: Colors.orange
+                                                  ),
+                                                  child: Center(
+                                                    child: Text("${data["discount"].toString()}%",style: TextStyle(
+                                                        color: Colors.white
+                                                    ),),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),),),
-                                        ],
+                                                Text(data["name"],textAlign: TextAlign.center,style: TextStyle(
+                                                  fontSize: 20
+                                                ),),
+                                                Text('${data["price"].toString()} EGP',textAlign: TextAlign.center,style: TextStyle(
+                                                  color: Colors.grey,
+                                                  fontSize: 16
+                                                ),),
+                                                Padding(
+                                                  padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 8.0),
+                                                  child: RatingBar(
+                                                    ignoreGestures: true,
+                                                    itemSize: 20,
+                                                    allowHalfRating: true,
+                                                    initialRating:3,
+                                                    itemPadding:
+                                                    EdgeInsets.symmetric(
+                                                        horizontal: 4.0),
+                                                    ratingWidget: RatingWidget(
+                                                      empty: Icon(
+                                                          Icons.star_border,
+                                                          color:Colors.grey,
+                                                          size: 20),
+                                                      full: Icon(
+                                                        Icons.star,
+                                                        color: Colors.yellow,
+                                                        size: 20,
+                                                      ),
+                                                      half: null,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),),),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),

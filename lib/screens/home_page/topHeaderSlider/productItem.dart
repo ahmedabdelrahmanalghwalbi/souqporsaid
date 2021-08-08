@@ -1,12 +1,16 @@
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:souqporsaid/alertToast.dart';
 import 'package:souqporsaid/screens/authentication/signup.dart';
 import 'package:souqporsaid/screens/home_page/productTestModel.dart';
 import 'package:souqporsaid/screens/product/product_page.dart';
+import 'package:souqporsaid/screens/product/view_product_page.dart';
 
 class ProductItem extends StatefulWidget {
   final Map<String, dynamic> product;
@@ -17,11 +21,12 @@ class ProductItem extends StatefulWidget {
 
 class _ProductItemState extends State<ProductItem> {
   bool isRed = false;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Navigator.push(context,MaterialPageRoute(builder: (context)=>ProductPage(product: widget.product,)));
+        Navigator.push(context,MaterialPageRoute(builder: (context)=>ViewProductPage(product: widget.product,)));
       },
       child: Card(
         shadowColor: Colors.black54,
@@ -74,7 +79,8 @@ class _ProductItemState extends State<ProductItem> {
               Expanded(child: ClipOval(
                 child: AspectRatio(
                     aspectRatio: 0.8,
-                    child: Image.network(widget.product["images"][0], fit: BoxFit.contain,)),
+                    child:Image.network(widget.product["images"][0], fit: BoxFit.contain,)
+                ),
               )),
               const SizedBox(height: 10,),
               Expanded(child: Column(

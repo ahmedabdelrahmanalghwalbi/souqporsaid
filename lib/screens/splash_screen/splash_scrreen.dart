@@ -34,7 +34,7 @@ class Splash extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
-        child: Image.asset("assets/logo1.png")
+        child: Image.asset("assets/logo11.jpeg")
       ),
     );
   }

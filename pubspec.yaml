@@ -36,6 +36,9 @@ dependencies:
   shared_preferences: ^2.0.6
   intl: ^0.17.0
   provider: ^5.0.0
+  carousel_pro: ^1.0.0
+  url_launcher: ^6.0.9
+  whatsapp_unilink: ^2.0.0
 
 
 
@@ -64,6 +67,8 @@ flutter:
   assets:
     - assets/logo.png
     - assets/logo1.png
+    - assets/logo11.jpeg
+    - assets/ph.png
     - assets/Vector.png
     - assets/appBarLogo.png
     - assets/assets/

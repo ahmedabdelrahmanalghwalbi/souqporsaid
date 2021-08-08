@@ -141,7 +141,7 @@ class _SearchPageState extends State<SearchPage>
                       padding: EdgeInsets.symmetric(horizontal: 16.0),
                       child: ListTile(
                         onTap: (){
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ProductPage(product: data,)));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ViewProductPage(product: data,)));
                         },
                         title: Text(data["name"]),
                       ));

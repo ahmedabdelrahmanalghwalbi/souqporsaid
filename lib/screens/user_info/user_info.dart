@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:souqporsaid/screens/authentication/signup.dart';
 import 'package:souqporsaid/screens/search/search_screen.dart';
 import 'package:souqporsaid/screens/user_info/body.dart';
 

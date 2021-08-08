@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:souqporsaid/screens/home_page/topHeaderSlider/productItem.dart';
 
+import '../../responsize.dart';
+
 class StaggeredDualView extends StatefulWidget {
   final double spacing;
   final double aspectRatio;
@@ -25,7 +27,7 @@ class _StaggeredDualViewState extends State<StaggeredDualView> {
         minHeight: height,
         child: GridView(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
+            crossAxisCount: AppResponsive.isDesktop(context) || AppResponsive.isTablet(context)?5:2,
             childAspectRatio: widget.aspectRatio,
             crossAxisSpacing: widget.spacing,
             mainAxisSpacing: widget.spacing

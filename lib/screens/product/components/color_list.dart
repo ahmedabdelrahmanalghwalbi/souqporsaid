@@ -2,9 +2,9 @@ import 'package:souqporsaid/app_properties.dart';
 import 'package:flutter/material.dart';
 
 class ColorList extends StatefulWidget {
-  final List<Color> colorList;
+  final colorList;
 
-  ColorList(this.colorList, {Key key}) : super(key: key);
+  ColorList(this.colorList);
 
   @override
   _ColorListState createState() => _ColorListState();
@@ -32,23 +32,27 @@ class _ColorListState extends State<ColorList> {
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: widget.colorList.length,
-
               /// list of button colors based on colorList
               itemBuilder: (_, index) => InkWell(
                     onTap: () {
                       setState(() {
-                        ///sets the color pressed to be the active one
                         active = index;
                       });
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 4.0, vertical: 8.0),
-
                       ///scale based on active color
                       child: Transform.scale(
                         scale: active == index ? 1.2 : 1,
-                        child: ColorOption(widget.colorList[index]),
+                        child: Container(
+                            width: 32,
+                            height: 32,
+                            decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            color: Color(int.parse(widget.colorList[index]))
+                            ),
+                            )
                       ),
                     ),
                   ),
@@ -56,23 +60,6 @@ class _ColorListState extends State<ColorList> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class ColorOption extends StatelessWidget {
-  final Color color;
-
-  const ColorOption(this.color, {Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 32,
-      height: 32,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(5)),
-         color: color),
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:souqporsaid/screens/authentication/signup.dart';
 import 'package:souqporsaid/screens/components/custom_buttom_bar.dart';
 
 import '../../alertToast.dart';
+import '../responsize.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -21,7 +22,7 @@ class _LoginState extends State<Login> {
       backgroundColor: Colors.black,
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+          padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top,left: AppResponsive.isDesktop(context) || AppResponsive.isTablet(context)?50:10,right: AppResponsive.isDesktop(context) || AppResponsive.isTablet(context)?50:10),
           width: width,
           height: height,
           child: Column(
